@@ -16,18 +16,21 @@ public class PlayerControls : MonoBehaviour {
     } 
 
     void FixedUpdate() {
-        Debug.Log("moving player");
+        //Debug.Log("moving player");
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
         rb.AddForce(movement * speed);
-        if (rb.GetComponent<Vector3>().y < 3) {
-            rb.MovePosition(new Vector3(0,0.5f,0));
-        }
     }
 
     void OnMove(InputValue movementValue) {
-        Debug.Log("capturing input");
+        //Debug.Log("capturing input");
         Vector2 movementVector = movementValue.Get<Vector2>();
         movementX = movementVector.x;
         movementY = movementVector.y;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if(other.gameObject.CompareTag("PickUp")) {
+            other.gameObject.SetActive(false);
+        }
     }
 }
